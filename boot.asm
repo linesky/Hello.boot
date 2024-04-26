@@ -2,6 +2,29 @@ bits 16
 org 0x7c00
 boots:
 jmp _start
+nop
+oem             db      'MY OEM  '
+bsector         dw      200h
+scluster        db      1h 
+rsector         dw      1h
+tfat            db      2h
+rent            dw      0e0h
+tsectors        dw      0b40h
+media           db      0f0h 
+sfat            dw      9h
+strak           dw      12h
+head            dw      2h
+hidden          dd      0h
+large           dd      0h
+drive           db      0h
+flag            db      0h
+sig             db      29h
+vol             dd      0ffffffffh
+label           db      'MY LABEL    '
+id              db      'FAT12   '
+;--------------------------------------------------------
+eess            dw      0
+ees1            dw      0
 _start:
     push ds
     mov ax,0xb800
