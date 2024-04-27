@@ -26,45 +26,43 @@ id              db      'FAT12   '
 eess            dw      0
 ees1            dw      0
 _start:
-    push ds
-    mov ax,0xb800
-    mov si,1
+;load into 1000h:100h
+    mov ax,1000h
+    mov bx,100h
+    mov es,ax
+    mov al,0x70
+    mov ch,0
+    mov cl,2
+    mov dh,0
+    mov ah,2
+    mov dl,0
+;int load sectores into memory
+    int 13h
+    mov sp,0xffff
+    mov ax,0x2000
+    mov ss,ax
+    mov ax,1000h
+    mov es,ax
     mov ds,ax
-    mov al,0x67
-    mov cx,2000
-    mov dx,2
-    call fill
-    pop ds
-    mov si,hello
-    call puts
-hltas:
-    jmp hltas
-puts:
-    ds
-    mov al,[si]
-    call putc
-    inc si
-    cmp al,0
-    jnz puts
-ret
-putc:
-    mov ah,0x0e
-    mov bl,0x7
-    int 0x10
-ret
-fill:
-    cmp cx,0
-    jz fill3
-    fill2:
-        ds
-        mov [si],al
-        add si,dx
-        dec cx
-        jnz fill2
-fill3:
-ret        
-hello:
-db "hello world.",13,10,0,0
+    mov ax,1000h
+    mov es,ax
+    mov ds,ax
+    mov ax,0x1000
+    push ax
+    mov ax,0x100
+    push ax
+
+;start ax bx cx dx to enter on program
+    mov ax,0
+    mov bx,0
+    mov cx,0x8000
+    mov dx,0
+    mov si,0
+    mov di,0
+;jump to 1000h:100h
+    retf
+    
+
 spere:
 times  510-(spere-boots) db 0 
 signature:
