@@ -39,7 +39,7 @@ _start:
 ;int load sectores into memory
     int 13h
     mov sp,0xffff
-    mov ax,0x2000
+    mov ax,0x1000
     mov ss,ax
     mov ax,1000h
     mov es,ax
